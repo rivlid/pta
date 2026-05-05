@@ -1,0 +1,42 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+- name: Install base packages
+  apt:
+    name:
+      - samba
+      - nfs-common
+    state: present
+- name: Backup smb.conf
+  copy:
+    src: /etc/samba/smb.conf
+    dest: /etc/samba/smb.conf.back
+    remote_src: yes
+- name: Copy smb.conf
+  copy:
+    src: smb.conf
+    dest: /etc/samba/smb.conf.back
+- name: Create mount directories
+  file:
+    path: "{{ item.dest }}"
+    state: directory
+    mode: "777"
+  loop: "{{ fstab_nfs_mounts }}"
+- name: Add NFS mounts to fstab
+  mount:
+    path: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    fstype: nfs4
+    opts: "rw,user,noatime,nolock,bg,x-systemd.automount,x-systemd.requires=network-online.target"
+    dump: "0"
+    passno: "0"    
+    state: present
+  loop: "{{ fstab_nfs_mounts }}"
+- name: Reload systemd daemon
+  systemd:
+    daemon_reload: yes
+- name: Mount all fstab entries
+  command: mount -a
+...
