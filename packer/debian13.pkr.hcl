@@ -30,7 +30,7 @@ source "proxmox-iso" "debian13" {
 
   disks {
     disk_size         = "20G"
-    storage_pool      = "zfs-ssd"
+    storage_pool      = var.storage_pool
     type              = "scsi"
     discard           = true
     io_thread         = true
@@ -44,7 +44,7 @@ source "proxmox-iso" "debian13" {
   }
 
   cloud_init              = true
-  cloud_init_storage_pool = "zfs-ssd"
+  cloud_init_storage_pool = var.storage_pool
 
   boot_wait = "5s"
   boot_command = [

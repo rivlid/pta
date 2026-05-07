@@ -35,7 +35,7 @@ resource "proxmox_virtual_environment_vm" "debian" {
   }
 
   disk {
-    datastore_id = "zfs-ssd"
+    datastore_id = var.storage_pool
     size         = 20
     interface    = "scsi0"
     discard      = "on"
@@ -53,7 +53,7 @@ resource "proxmox_virtual_environment_vm" "debian" {
   }
 
   initialization {
-    datastore_id = "zfs-ssd"
+    datastore_id = var.storage_pool
     dns {
         servers = ["192.168.9.4"]
         domain = "sadkomed.local"

@@ -27,3 +27,8 @@ variable "vm_count" {
   type    = number
   default = 1
 }
+
+variable "storage_pool" {
+  type    = string
+  default = "zfs-ssd"
+}

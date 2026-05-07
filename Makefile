@@ -6,12 +6,14 @@ export
 PKR_VARS = PKR_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
            PKR_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
            PKR_VAR_proxmox_node='$(PROXMOX_NODE)' \
-           PKR_VAR_proxmox_url='$(PROXMOX_HOST)'/api2/json
+           PKR_VAR_proxmox_url='$(PROXMOX_HOST)'/api2/json \
+		   PKR_VAR_storage_pool='$(STORAGE_POOL)'
 
 TF_VARS  = TF_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
            TF_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
            TF_VAR_proxmox_node='$(PROXMOX_NODE)' \
-           TF_VAR_proxmox_endpoint='$(PROXMOX_HOST)'/
+           TF_VAR_proxmox_endpoint='$(PROXMOX_HOST)'/ \
+		   TF_VAR__storage_pool='$(STORAGE_POOL)'
 
 PACKER_DIR    = packer
 #PACKER_VARS   = $(PACKER_DIR)/secrets.pkrvars.hcl

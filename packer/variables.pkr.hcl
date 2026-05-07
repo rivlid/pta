@@ -17,3 +17,8 @@ variable "proxmox_node" {
   type    = string
   default = "f01-hv01"
 }
+
+variable "storage_pool" {
+  type    = string
+  default = "zfs-ssd"
+}
