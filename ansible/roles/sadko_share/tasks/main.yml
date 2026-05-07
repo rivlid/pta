@@ -17,7 +17,7 @@
 - name: Copy smb.conf
   copy:
     src: smb.conf
-    dest: /etc/samba/smb.conf.back
+    dest: /etc/samba/smb.conf
 - name: Create mount directories
   file:
     path: "{{ item.dest }}"

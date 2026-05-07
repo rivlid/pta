@@ -1,6 +1,6 @@
 variable "proxmox_url" {
   type    = string
-  default = "https://192.168.0.12:8006/api2/json"
+  default = "https://192.168.0.1:8006/api2/json"
 }
 
 variable "proxmox_username" {
@@ -15,5 +15,5 @@ variable "proxmox_password" {
 
 variable "proxmox_node" {
   type    = string
-  default = "f99-hv14"
+  default = "f01-hv01"
 }

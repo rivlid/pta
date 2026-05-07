@@ -1,17 +1,7 @@
 variable "proxmox_endpoint" {
   type    = string
-  default = "https://192.168.0.12:8006/"
+  default = "https://192.168.0.1:8006/"
 }
-
-variable "proxmox_node" {
-  type    = string
-  default = "f99-hv14"
-}
-
-#variable "proxmox_api_token" {
-#  type      = string
-#  sensitive = true
-#}
 
 variable "proxmox_username" {
   type    = string
@@ -22,6 +12,16 @@ variable "proxmox_password" {
   type      = string
   sensitive = true
 }
+
+variable "proxmox_node" {
+  type    = string
+  default = "f01-hv01"
+}
+
+#variable "proxmox_api_token" {
+#  type      = string
+#  sensitive = true
+#} 
 
 variable "vm_count" {
   type    = number

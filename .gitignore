@@ -16,3 +16,5 @@ packer/packer_cache/
 
 # OS
 .DS_Store
+
+.secrets.env
