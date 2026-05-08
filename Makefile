@@ -13,7 +13,14 @@ TF_VARS  = TF_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
            TF_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
            TF_VAR_proxmox_node='$(PROXMOX_NODE)' \
            TF_VAR_proxmox_endpoint='$(PROXMOX_HOST)'/ \
-		   TF_VAR__storage_pool='$(STORAGE_POOL)'
+		   TF_VAR_vm_id='$(VM_ID)' \
+		   TF_VAR_vm_name='$(VM_NAME)' \
+		   TF_VAR_storage_pool='$(STORAGE_POOL)' \
+		   TF_VAR_vlan_id='$(VLAN_ID)' \
+		   TF_VAR_dns_domain='$(DNS_DOMAIN)' \
+		   TF_VAR_dhcp='$(DHCP)' \
+		   TF_VAR_ip_address='$(IP_ADDRESS)' \
+		   TF_VAR_ip_gateway='$(IP_GATEWAY)'
 
 PACKER_DIR    = packer
 #PACKER_VARS   = $(PACKER_DIR)/secrets.pkrvars.hcl

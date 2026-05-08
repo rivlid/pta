@@ -28,7 +28,51 @@ variable "vm_count" {
   default = 1
 }
 
+variable "vm_id" {
+  type    = string
+  default = "9001"
+}
+
+variable "vm_name" {
+  type    = string
+  default = "auto_vm"
+}
+
+variable "vm_tags" {
+  type    = list(string)
+  default = ["test", "deb", "pta"]
+}
+
 variable "storage_pool" {
   type    = string
   default = "zfs-ssd"
+}
+
+variable "vlan_id" {
+  type    = string
+  default = null
+}
+
+variable "dns_servers" {
+  type    = list(string)
+  default = ["192.168.9.4"]  
+}
+
+variable "dns_domain" {
+  type    = string
+  default = "sadkomed.local"  
+}
+
+variable "dhcp" {
+  type    = bool
+  default = true
+}
+
+variable "ip_address" {
+  type    = string  
+}
+
+variable "ip_gateway" {
+  type    = string
+  default = null   
 }

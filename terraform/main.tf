@@ -17,8 +17,10 @@ provider "proxmox" {
 
 resource "proxmox_virtual_environment_vm" "debian" {
   count     = var.vm_count
-  name      = "debian-${count.index + 1}"
+  vm_id     = var.vm_id
+  name      = var.vm_name
   node_name = var.proxmox_node
+  tags      = var.vm_tags
 
   clone {
     vm_id = 9000  # ID шаблона который создал Packer
@@ -45,7 +47,7 @@ resource "proxmox_virtual_environment_vm" "debian" {
   network_device {
     bridge = "vmbr0"
     model  = "virtio"
-    vlan_id  = 9
+    vlan_id  = var.vlan_id
   }
 
   agent {
@@ -55,13 +57,13 @@ resource "proxmox_virtual_environment_vm" "debian" {
   initialization {
     datastore_id = var.storage_pool
     dns {
-        servers = ["192.168.9.4"]
-        domain = "sadkomed.local"
+        servers = var.dns_servers
+        domain = var.dns_domain
     }
     ip_config {
       ipv4 {
-        address = "192.168.9.85/24"
-        gateway = "192.168.9.254"
+        address = var.dhcp ? "dhcp" : var.ip_address
+        gateway = var.dhcp ? null : var.ip_gateway
       }
     }
     user_account {
