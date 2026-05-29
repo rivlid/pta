@@ -29,8 +29,8 @@ variable "vm_count" {
 }
 
 variable "vm_id" {
-  type    = string
-  default = "9001"
+  type    = number
+  default = 9001
 }
 
 variable "vm_name" {

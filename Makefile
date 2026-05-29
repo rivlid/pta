@@ -13,6 +13,7 @@ TF_VARS  = TF_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
            TF_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
            TF_VAR_proxmox_node='$(PROXMOX_NODE)' \
            TF_VAR_proxmox_endpoint='$(PROXMOX_HOST)'/ \
+		   TF_VAR_vm_count='$(VM_COUNT)' \
 		   TF_VAR_vm_id='$(VM_ID)' \
 		   TF_VAR_vm_name='$(VM_NAME)' \
 		   TF_VAR_storage_pool='$(STORAGE_POOL)' \

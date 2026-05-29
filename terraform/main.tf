@@ -15,10 +15,18 @@ provider "proxmox" {
   insecure  = true
 }
 
+locals {
+  ip_parts    = split("/", var.ip_address)
+  ip_octets   = split(".", local.ip_parts[0])
+  ip_prefix   = local.ip_parts[1]
+  ip_network  = "${local.ip_octets[0]}.${local.ip_octets[1]}.${local.ip_octets[2]}.0/${local.ip_prefix}"
+  ip_host_num = tonumber(local.ip_octets[3])
+}
+
 resource "proxmox_virtual_environment_vm" "debian" {
   count     = var.vm_count
-  vm_id     = var.vm_id
-  name      = var.vm_name
+  vm_id     = var.vm_id + count.index
+  name      = "${var.vm_name}-${format("%02d", count.index + 1)}"
   node_name = var.proxmox_node
   tags      = var.vm_tags
 
@@ -62,7 +70,7 @@ resource "proxmox_virtual_environment_vm" "debian" {
     }
     ip_config {
       ipv4 {
-        address = var.dhcp ? "dhcp" : var.ip_address
+        address = var.dhcp ? "dhcp" : "${cidrhost(local.ip_network, local.ip_host_num + count.index)}/${local.ip_prefix}"
         gateway = var.dhcp ? null : var.ip_gateway
       }
     }
@@ -74,5 +82,9 @@ resource "proxmox_virtual_environment_vm" "debian" {
 }
 
 output "vm_ips" {
-  value = [for vm in proxmox_virtual_environment_vm.debian : vm.name]
+  value = [for vm in proxmox_virtual_environment_vm.debian : {
+    name = vm.name
+    id   = vm.vm_id
+    ip   = var.dhcp ? try(flatten(vm.ipv4_addresses)[1], "pending") : "${cidrhost(local.ip_network, local.ip_host_num + (vm.vm_id - var.vm_id))}/${local.ip_prefix}"
+  }]
 }
