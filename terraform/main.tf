@@ -36,17 +36,17 @@ resource "proxmox_virtual_environment_vm" "debian" {
   }
 
   cpu {
-    cores = 2
+    cores = var.vm_cores
     type  = "x86-64-v2-AES"
   }
 
   memory {
-    dedicated = 2048
+    dedicated = var.vm_memory
   }
 
   disk {
     datastore_id = var.storage_pool
-    size         = 20
+    size         = var.vm_disk_size
     interface    = "scsi0"
     discard      = "on"
     iothread     = true

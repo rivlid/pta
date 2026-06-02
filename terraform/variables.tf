@@ -38,14 +38,29 @@ variable "vm_name" {
   default = "auto_vm"
 }
 
-variable "vm_tags" {
-  type    = list(string)
-  default = ["test", "deb", "pta"]
+variable "vm_cores" {
+  type    = number
+  default = 2
+}
+
+variable "vm_memory" {
+  type    = number
+  default = 2048
+}
+
+variable "vm_disk_size" {
+  type    = number
+  default = 20
 }
 
 variable "storage_pool" {
   type    = string
   default = "zfs-ssd"
+}
+
+variable "vm_tags" {
+  type    = list(string)
+  default = ["test", "deb", "pta"]
 }
 
 variable "vlan_id" {
