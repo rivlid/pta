@@ -30,6 +30,11 @@ resource "proxmox_virtual_environment_vm" "debian" {
   node_name = var.proxmox_node
   tags      = var.vm_tags
 
+# Игнорирем изменения и ребут, ньанс с ключиками, если хотим сменить айпишники и прочее выключаем
+  lifecycle {
+    ignore_changes = [initialization]
+  }
+
   clone {
     vm_id = 9000  # ID шаблона который создал Packer
     full  = true
