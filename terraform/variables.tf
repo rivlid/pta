@@ -38,6 +38,11 @@ variable "vm_name" {
   default = "auto_vm"
 }
 
+variable "name_offset" {
+  type    = number
+  default = 0
+}
+
 variable "vm_cores" {
   type    = number
   default = 2

@@ -26,7 +26,7 @@ locals {
 resource "proxmox_virtual_environment_vm" "debian" {
   count     = var.vm_count
   vm_id     = var.vm_id + count.index
-  name      = "${var.vm_name}-${format("%02d", count.index + 1)}"
+  name      = "${var.vm_name}-${format("%02d", count.index + var.name_offset + 1)}"
   node_name = var.proxmox_node
   tags      = var.vm_tags
 

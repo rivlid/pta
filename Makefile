@@ -16,6 +16,7 @@ TF_VARS  = TF_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
 		   TF_VAR_vm_count='$(VM_COUNT)' \
 		   TF_VAR_vm_id='$(VM_ID)' \
 		   TF_VAR_vm_name='$(VM_NAME)' \
+		   TF_VAR_name_offset='$(NAME_OFFSET)' \
 		   TF_VAR_vm_cores='$(VM_CORES)' \
            TF_VAR_vm_memory='$(VM_MEMORY)' \
            TF_VAR_vm_disk_size='$(VM_DISK_SIZE)' \
