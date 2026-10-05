@@ -61,6 +61,7 @@ resource "proxmox_virtual_environment_vm" "debian" {
     bridge = "vmbr0"
     model  = "virtio"
     vlan_id  = var.vlan_id
+    queues  = var.vm_cores
   }
 
   agent {
