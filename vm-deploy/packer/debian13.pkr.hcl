@@ -57,7 +57,7 @@ source "proxmox-iso" "debian13" {
     "<enter>"
   ]
 
-  http_directory = "http"
+  http_directory = "packer/http"
 
   ssh_username           = "root"
   ssh_password           = "debian"
