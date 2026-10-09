@@ -17,7 +17,7 @@ source "proxmox-iso" "debian13" {
   vm_id   = 9001
   vm_name = "debian-13-employee"
   boot_iso {
-    iso_url          = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.6.0-amd64-netinst.iso"
+    iso_url          = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso"
     iso_checksum     = "sha256:65273beed27b2df543b68b65630ba525cfbad8df2b12035732b2dff87d6664e7"
     iso_storage_pool = "local"
     unmount          = true
