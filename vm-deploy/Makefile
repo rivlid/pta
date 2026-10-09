@@ -11,7 +11,7 @@ PKR_VARS = PKR_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
 
 TF_VARS  = TF_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
            TF_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
-           TF_VAR_proxmox_nodes='$(PROXMOX_NODES)' \
+           TF_VAR_proxmox_nodes='["$(PROXMOX_NODE)"]' \
            TF_VAR_proxmox_endpoint='$(PROXMOX_HOST)'/ \
            TF_VAR_vm_count='$(VM_COUNT)' \
            TF_VAR_vm_id='$(VM_ID)' \
