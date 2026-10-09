@@ -5,7 +5,7 @@ export
 
 PKR_VARS = PKR_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
            PKR_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
-           PKR_VAR_proxmox_node='$(shell echo '$(PROXMOX_NODES)' | tr -d '[]"' | cut -d',' -f1)' \
+           PKR_VAR_proxmox_node='$(PROXMOX_NODE)' \
            PKR_VAR_proxmox_url='$(PROXMOX_HOST)'/api2/json \
            PKR_VAR_storage_pool='$(STORAGE_POOL)'
 
@@ -27,8 +27,8 @@ TF_VARS  = TF_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
            TF_VAR_ip_address='$(IP_ADDRESS)' \
            TF_VAR_ip_gateway='$(IP_GATEWAY)'
 
-PACKER_DIR    = vm-deploy/packer
-TERRAFORM_DIR = vm-deploy/terraform
+PACKER_DIR    = packer
+TERRAFORM_DIR = terraform
 
 packer-init:
 	packer init $(PACKER_DIR)/. || true
