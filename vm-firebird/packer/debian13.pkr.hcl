@@ -72,7 +72,7 @@ source "proxmox-iso" "debian13" {
   ssh_handshake_attempts = 50
 
   template_name        = "debian-13-firebird"
-  template_description = "Debian 13 - Firebird 5 DB server template (swap on scsi1, /mnt/db on scsi2, FB not installed)"
+  template_description = "Debian 13 - Firebird 5 DB server template (swap on scsi1, /mnt/db on scsi2, NFS backup share, FB not installed)"
   unmount_iso          = true
 }
 
@@ -93,7 +93,7 @@ build {
       # /etc/resolv.conf на свой stub, а сервис ещё не запущен -> DNS пропадает
       # и любой следующий apt-get install падает с ошибкой разрешения имён.
       # Зависимости Firebird 5 (официальный tarball): libtommath1 libicu76 libncurses6 libatomic1
-      "apt-get install -y cloud-init qemu-guest-agent curl wget locales systemd-resolved netplan.io cloud-guest-utils parted libtommath1 libicu76 libncurses6 libatomic1 htop iotop sysstat",
+      "apt-get install -y cloud-init qemu-guest-agent curl wget locales systemd-resolved netplan.io cloud-guest-utils parted nfs-common libtommath1 libicu76 libncurses6 libatomic1 htop iotop sysstat",
       # Локали
       "sed -i 's/# ru_RU.UTF-8/ru_RU.UTF-8/' /etc/locale.gen",
       "sed -i 's/# en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen",
@@ -122,6 +122,9 @@ build {
       "install -m 0644 /tmp/fb-disks.service /etc/systemd/system/fb-disks.service",
       "systemctl enable fb-disks.service",
       "mkdir -p /mnt/db",
+      # NFS-шара для бэкапов. nofail + automount: если NFS недоступен, ВМ всё равно загрузится.
+      # Версию NFS не указываем — mount.nfs сам договорится с сервером.
+      "if [ -n '${var.backup_nfs_src}' ]; then mkdir -p ${var.backup_mount} && echo '${var.backup_nfs_src} ${var.backup_mount} nfs rw,noatime,_netdev,nofail,x-systemd.automount,x-systemd.mount-timeout=30 0 0' >> /etc/fstab; fi",
       # Тюнинг ядра и лимиты для будущего firebird.service
       "install -m 0644 /tmp/99-firebird.conf /etc/sysctl.d/99-firebird.conf",
       "install -d /etc/systemd/system/firebird.service.d",

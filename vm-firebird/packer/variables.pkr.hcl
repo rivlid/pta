@@ -22,3 +22,14 @@ variable "storage_pool" {
   type    = string
   default = "zfs-ssd"
 }
+
+# NFS-шара для бэкапов БД (пусто = не добавлять в fstab)
+variable "backup_nfs_src" {
+  type    = string
+  default = "192.168.0.31:/data/backup/infodent"
+}
+
+variable "backup_mount" {
+  type    = string
+  default = "/mnt/backup"
+}
