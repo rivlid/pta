@@ -18,3 +18,12 @@ packer/packer_cache/
 .DS_Store
 
 .secrets.env
+
+# Terraform/Packer во всех подпапках (vm-deploy, vm-firebird, ...)
+**/terraform/terraform.tfstate
+**/terraform/terraform.tfstate.backup
+**/terraform/.terraform/
+**/terraform/.terraform.lock.hcl
+**/terraform/terraform.tfvars
+**/packer/secrets.pkrvars.hcl
+**/packer/packer_cache/

@@ -1,0 +1,54 @@
+include .secrets.env
+export
+
+.PHONY: packer-init packer-validate packer-build terraform-init terraform-plan terraform-apply terraform-destroy
+
+PKR_VARS = PKR_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
+           PKR_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
+           PKR_VAR_proxmox_node='$(PROXMOX_NODE)' \
+           PKR_VAR_proxmox_url='$(PROXMOX_HOST)'/api2/json \
+           PKR_VAR_storage_pool='$(STORAGE_POOL)'
+
+TF_VARS  = TF_VAR_proxmox_password='$(PROXMOX_PASSWORD)' \
+           TF_VAR_proxmox_username='$(PROXMOX_USERNAME)' \
+           TF_VAR_proxmox_nodes='["$(PROXMOX_NODE)"]' \
+           TF_VAR_proxmox_endpoint='$(PROXMOX_HOST)'/ \
+           TF_VAR_vm_count='$(VM_COUNT)' \
+           TF_VAR_vm_id='$(VM_ID)' \
+           TF_VAR_vm_name='$(VM_NAME)' \
+           TF_VAR_name_offset='$(or $(NAME_OFFSET),0)' \
+           TF_VAR_vm_cores='$(VM_CORES)' \
+           TF_VAR_vm_memory='$(VM_MEMORY)' \
+           TF_VAR_vm_disk_size='$(VM_DISK_SIZE)' \
+           TF_VAR_swap_disk_size='$(SWAP_DISK_SIZE)' \
+           TF_VAR_data_disk_size='$(DATA_DISK_SIZE)' \
+           TF_VAR_vm_tags='$(VM_TAGS)' \
+           TF_VAR_storage_pool='$(STORAGE_POOL)' \
+           TF_VAR_data_storage_pool='$(DATA_STORAGE_POOL)' \
+           TF_VAR_vlan_id='$(VLAN_ID)' \
+           TF_VAR_dns_domain='$(DNS_DOMAIN)' \
+           TF_VAR_dhcp='$(DHCP)' \
+           TF_VAR_ip_address='$(IP_ADDRESS)' \
+           TF_VAR_ip_gateway='$(IP_GATEWAY)'
+
+PACKER_DIR    = packer
+TERRAFORM_DIR = terraform
+
+packer-init:
+	packer init $(PACKER_DIR)/. || true
+packer-validate:
+	$(PKR_VARS) packer validate $(PACKER_DIR)/.
+packer-build:
+	$(PKR_VARS) packer build $(PACKER_DIR)/.
+
+terraform-init:
+	terraform -chdir=$(TERRAFORM_DIR) init
+
+terraform-plan:
+	$(TF_VARS) terraform -chdir=$(TERRAFORM_DIR) plan
+
+terraform-apply:
+	$(TF_VARS) terraform -chdir=$(TERRAFORM_DIR) apply
+
+terraform-destroy:
+	$(TF_VARS) terraform -chdir=$(TERRAFORM_DIR) destroy

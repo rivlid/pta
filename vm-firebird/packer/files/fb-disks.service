@@ -1,0 +1,12 @@
+[Unit]
+Description=Prepare swap and Firebird data disks (scsi1/scsi2)
+After=local-fs.target
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/fb-disks.sh
+
+[Install]
+WantedBy=multi-user.target
