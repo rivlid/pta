@@ -89,9 +89,11 @@ build {
     inline = [
       "export DEBIAN_FRONTEND=noninteractive",
       "apt-get update",
-      "apt-get install -y cloud-init qemu-guest-agent curl wget locales systemd-resolved netplan.io cloud-guest-utils parted",
-      # Зависимости Firebird 5 (официальный tarball) + утилиты
-      "apt-get install -y libtommath1 libicu76 libncurses6 libatomic1 tar gzip htop iotop sysstat",
+      # ВСЁ ставим одной командой: пакет systemd-resolved сразу переключает
+      # /etc/resolv.conf на свой stub, а сервис ещё не запущен -> DNS пропадает
+      # и любой следующий apt-get install падает с ошибкой разрешения имён.
+      # Зависимости Firebird 5 (официальный tarball): libtommath1 libicu76 libncurses6 libatomic1
+      "apt-get install -y cloud-init qemu-guest-agent curl wget locales systemd-resolved netplan.io cloud-guest-utils parted libtommath1 libicu76 libncurses6 libatomic1 htop iotop sysstat",
       # Локали
       "sed -i 's/# ru_RU.UTF-8/ru_RU.UTF-8/' /etc/locale.gen",
       "sed -i 's/# en_US.UTF-8/en_US.UTF-8/' /etc/locale.gen",
